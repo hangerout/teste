@@ -1,4 +1,4 @@
-set_default(:ruby_version){"ruby-1.9.3-p125"}
+set_default(:ruby_version){"ruby-2.0.0-p247"}
 set_default(:rvm_ruby_string){"#{ruby_version}@#{application}"}
 set_default(:rvm_type){:user}
 
