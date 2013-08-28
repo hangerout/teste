@@ -7,7 +7,7 @@ set_default(:mysql_database) { "#{application}_production" }
 namespace :mysql do
   desc "Install the latest stable release of MySQL."
   task :install, :roles => :db, :only => {:primary => true} do
-    run "#{sudo} apt-get -y install mysql-server" do |channel, stream, data|
+    run "#{sudo} apt-get -y install mysql-server mysql-client libmysqlclient-dev" do |channel, stream, data|
       # prompts for mysql root password (when blue screen appears)
       channel.send_data("#{mysql_root_password}\n\r") if data =~ /password/
     end
