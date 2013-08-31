@@ -5,6 +5,7 @@ load "config/recipes/nginx"
 load "config/recipes/unicorn"
 load "config/recipes/mysql"
 load "config/recipes/nodejs"
+load "config/recipes/redis"
 load "config/recipes/rvm"
 load "config/recipes/check"
 
