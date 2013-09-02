@@ -39,3 +39,14 @@ end
 
 # To use debugger
 # gem 'debugger'
+
+#Background process
+gem 'sidekiq', '~> 2.13.0'
+
+# Process management
+gem 'foreman'
+
+#Schedule workers
+gem "clockwork", "~> 0.6.0"
+
+gem "daemons", "~> 1.1.9"
