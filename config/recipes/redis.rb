@@ -11,24 +11,37 @@ namespace :redis do
 
   desc "Setup redis configuration for this application"
   task :setup, :roles => :app do
-    template "redis_init_script.erb", "/tmp/redis_6379"
-    template "redis_conf.erb", "/tmp/6379.conf"
 
+    # Copie redis-server and redis-cli executables
     run "#{sudo} cp /usr/bin/redis-server /usr/local/bin"
     run "#{sudo} cp /usr/bin/redis-cli /usr/local/bin"
+
+    # Create a directory where to store your Redis config files and your data:
     run "#{sudo} mkdir -p /etc/redis"
     run "#{sudo} mkdir -p /var/redis"
-    run "#{sudo} mkdir -p /var/redis/6379"
-    run "#{sudo} mv /tmp/redis_6379 /etc/init.d/redis_6379"
-    run "#{sudo} mv /tmp/6379.conf /etc/redis/6379.conf"
-    run "chmod u+x /etc/init.d/redis_6379"
 
+    # Create a directory where to store data
+    run "#{sudo} mkdir -p /var/redis/6379"
+
+    # Make a writable log file
     run "#{sudo} touch /var/log/redis_6379.log"
-    run "#{sudo} chown #{user}:redis_6379 -R /etc/redis/"
     run "#{sudo} chown #{user}:redis_6379 /var/log/redis_6379.log"
     run "#{sudo} chmod u+w /var/log/redis_6379.log"
 
-    run "#{sudo} update-rc.d redis_6379 defaults"
+    # Make an config file
+    template "redis_conf.erb", "/tmp/6379.conf"
+    run "#{sudo} mv /tmp/6379.conf /etc/redis/6379.conf"
+    #run "#{sudo} chown #{user}:redis_6379 -R /etc/redis/"
+
+    # Make an init script
+    template "redis_init_script.erb", "/tmp/redis_6379"
+    run "#{sudo} mv /tmp/redis_6379 /etc/init.d/redis_6379"
+    run "chmod u+x /etc/init.d/redis_6379"
+    run "#{sudo} update-rc.d -f redis_6379 defaults"
+
+
+
+    # Start redis
     run "#{sudo} /etc/init.d/redis_6379 start"
   end
   after "deploy:setup", "redis:setup"
