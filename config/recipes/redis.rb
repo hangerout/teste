@@ -16,15 +16,20 @@ namespace :redis do
 
     run "#{sudo} cp /usr/bin/redis-server /usr/local/bin"
     run "#{sudo} cp /usr/bin/redis-cli /usr/local/bin"
-    run "#{sudo} mkdir /etc/redis"
-    run "#{sudo} mkdir /var/redis"
-    run "#{sudo} mkdir /var/redis/6379"
-    run "chmod +x /tmp/redis_6379"
+    run "#{sudo} mkdir -p /etc/redis"
+    run "#{sudo} mkdir -p /var/redis"
+    run "#{sudo} mkdir -p /var/redis/6379"
     run "#{sudo} mv /tmp/redis_6379 /etc/init.d/redis_6379"
     run "#{sudo} mv /tmp/6379.conf /etc/redis/6379.conf"
-    run "#{sudo} update-rc.d redis_6379 defaults"
+    run "chmod u+x /etc/init.d/redis_6379"
 
-    run "/etc/init.d/redis_6379 start"
+    run "#{sudo} touch /var/log/redis_6379.log"
+    run "#{sudo} chown #{user}:redis_6379 -R /etc/redis/"
+    run "#{sudo} chown #{user}:redis_6379 /var/log/redis_6379.log"
+    run "#{sudo} chmod u+w /var/log/redis_6379.log"
+
+    run "#{sudo} update-rc.d redis_6379 defaults"
+    run "#{sudo} /etc/init.d/redis_6379 start"
   end
   after "deploy:setup", "redis:setup"
 
