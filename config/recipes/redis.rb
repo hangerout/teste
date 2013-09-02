@@ -24,7 +24,8 @@ namespace :redis do
   desc "Setup redis configuration for this application"
   task :setup, :roles => :app do
 
-    # Copie redis-server and redis-cli executables
+    # Copy redis-server and redis-cli executables
+    # Run just once, after conflict
     run "#{sudo} cp /home/#{user}/redis-stable/src/redis-server /usr/local/bin"
     run "#{sudo} cp /home/#{user}/redis-stable/src/redis-cli /usr/local/bin"
 
@@ -34,6 +35,7 @@ namespace :redis do
     # Create a directory where to store your Redis config files and your data:
     run "#{sudo} mkdir -p /etc/redis"
     run "#{sudo} mkdir -p /var/redis"
+    run "#{sudo} chmod -R 777 /var/redis"
 
     # Create a directory where to store data
     run "#{sudo} mkdir -p /var/redis/6379"
@@ -54,10 +56,8 @@ namespace :redis do
     run "chmod u+x /etc/init.d/redis_6379"
     run "#{sudo} update-rc.d -f redis_6379 defaults"
 
-
-
     # Start redis
-    run "#{sudo} /etc/init.d/redis_6379 start"
+    run "/etc/init.d/redis_6379 start"
   end
   after "deploy:setup", "redis:setup"
 
