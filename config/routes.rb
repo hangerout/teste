@@ -1,7 +1,9 @@
+require 'sidekiq/web'
 Teste::Application.routes.draw do
   resources :users
   root :to => 'users#index'
 
+  mount Sidekiq::Web, at: '/sidekiq'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

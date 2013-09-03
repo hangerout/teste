@@ -43,6 +43,10 @@ end
 #Background process
 gem 'sidekiq', '~> 2.13.0'
 
+gem 'sinatra', '~> 1.4.3'
+
+gem 'slim', '~> 2.0.1'
+
 # Process management
 gem 'foreman'
 
