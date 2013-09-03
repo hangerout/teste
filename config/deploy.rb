@@ -6,6 +6,7 @@ load "config/recipes/unicorn"
 load "config/recipes/mysql"
 load "config/recipes/nodejs"
 load "config/recipes/redis"
+load "config/recipes/foreman"
 load "config/recipes/rvm"
 load "config/recipes/check"
 
