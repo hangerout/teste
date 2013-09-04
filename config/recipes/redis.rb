@@ -26,8 +26,8 @@ namespace :redis do
 
     # Copy redis-server and redis-cli executables
     # Run just once, after conflict
-    run "#{sudo} cp /home/#{user}/redis-stable/src/redis-server /usr/local/bin"
-    run "#{sudo} cp /home/#{user}/redis-stable/src/redis-cli /usr/local/bin"
+    #run "#{sudo} cp /home/#{user}/redis-stable/src/redis-server /usr/local/bin"
+    #run "#{sudo} cp /home/#{user}/redis-stable/src/redis-cli /usr/local/bin"
 
     #run "#{sudo} cp /usr/bin/redis-server /usr/local/bin"
     #run "#{sudo} cp /usr/bin/redis-cli /usr/local/bin"
